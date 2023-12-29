@@ -60,9 +60,9 @@ type Coordinates = {
 
 type Bingos = Coordinates[][];
 
-const containsObjectLoosely = (arr, obj) => {
+const containsObjectLoosely = (arr: Coordinates[], obj: Coordinates) => {
   return arr.some((element) => {
-    return Object.keys(obj).every((key) => obj[key] === element[key]);
+    return Object.keys(obj).every((key) => obj[key as keyof Coordinates] === element[key as keyof Coordinates]);
   });
 };
 
