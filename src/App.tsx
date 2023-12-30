@@ -51,6 +51,18 @@ const CELLS_THAT_EXIST = [
     i: 4,
     j: 4,
   },
+  {
+    i: 3,
+    j: 1,
+  },
+  {
+    i: 4,
+    j: 0,
+  },
+  {
+    i: 1,
+    j: 3,
+  },
 ];
 
 type Coordinates = {
@@ -62,7 +74,7 @@ type Bingos = Coordinates[][];
 
 const containsObjectLoosely = (arr: Coordinates[], obj: Coordinates) => {
   return arr.some((element) => {
-    return Object.keys(obj).every((key) => obj[key as keyof Coordinates] === element[key as keyof Coordinates]);
+    return element.i === obj.i && element.j === obj.j;
   });
 };
 
@@ -86,6 +98,24 @@ function App() {
       bingos.push(range(0, 5).map((j) => ({ j: i, i: j })));
     }
   });
+
+  if (
+    range(0, 5).filter((i) => {
+      return containsObjectLoosely(CELLS_THAT_EXIST, { i, j: i });
+    }).length === 5
+  ) {
+    bingos.push(range(0, 5).map((i) => ({ i, j: i })));
+  }
+
+  if (
+    range(0, 5).filter((i) => {
+      return containsObjectLoosely(CELLS_THAT_EXIST, { i, j: 5 - 1 - i });
+    }).length === 5
+  ) {
+    bingos.push(range(0, 5).map((i) => ({ i, j: 5 - 1 - i })));
+  }
+
+  console.log(bingos);
 
   return (
     <>
